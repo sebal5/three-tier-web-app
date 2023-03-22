@@ -13,23 +13,32 @@ resource "google_cloud_run_service" "this" {
   template {
     metadata {
       annotations = {
-        "autoscaling.knative.dev/minScale" = var.gcr_min_instances
-        "autoscaling.knative.dev/maxScale" = var.gcr_max_instances
+        "autoscaling.knative.dev/minScale"        = var.gcr_min_instances
+        "autoscaling.knative.dev/maxScale"        = var.gcr_max_instances
         "run.googleapis.com/cloudsql-instances"   = google_sql_database_instance.this.connection_name
-         "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.this.name
+        "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.this.name
       }
     }
     spec {
       containers {
         image = "europe-west4-docker.pkg.dev/${var.gcp_project}/web-appplication/${local.service_name}:latest"
         env {
-          name  = "DBUSER"
-          value = ""
-
+          name = "DBUSER"
+          value_from {
+            secret_key_ref {
+              key  = "latest"
+              name = "api-app_db_user_ro_prod"
+            }
+          }
         }
         env {
           name  = "DBPASS"
-          value = ""
+          value_from {
+            secret_key_ref {
+              key  = "latest"
+              name = "api-app_db_pwd_ro_prod"
+            }
+          }
         }
         env {
           name  = "DB"
@@ -37,7 +46,7 @@ resource "google_cloud_run_service" "this" {
         }
         env {
           name  = "DBHOST"
-          value = ""
+          value = google_sql_database_instance.this.private_ip_address
         }
         env {
           name  = "DBPORT"
