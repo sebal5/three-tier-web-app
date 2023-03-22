@@ -17,6 +17,7 @@ jobs:
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
   
   Publish:
+    runs-on: ubuntu-latest
     steps:
     - name: Configure docker for GCP
       if: |
