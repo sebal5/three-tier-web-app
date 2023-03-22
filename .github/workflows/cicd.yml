@@ -21,17 +21,20 @@ jobs:
     steps:
     - name: Configure docker for GCP
       if: |
-        !cancelled() && needs.config.result == 'success' 
+        always() && needs.config.result == 'success'
+      needs: [config] 
       run: gcloud auth configure-docker europe-west4-docker.pkg.dev --quiet
 
     - name: Build docker image - api
       if: |
         !cancelled() && needs.config.result == 'success' 
+      needs: [config] 
       run:  |
        cd api
        docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
        
     - name: Push to Google Artifact Registry
       if: |
-        !cancelled() && needs.config.result == 'success' 
+        !cancelled() && needs.config.result == 'success'
+      needs: [config] 
       run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
