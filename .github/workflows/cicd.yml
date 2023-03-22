@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
 jobs:
-  build:
+  config:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -15,14 +15,16 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-
+  
+  Publish:
+    steps:
     - name: Configure docker for GCP
       run: gcloud auth configure-docker europe-west4-docker.pkg.dev --quiet
 
     - name: Build docker image - api
       run:  |
        cd api
-       docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/sample-web-app/api-app:latest
+       docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
        
     - name: Push to Google Artifact Registry
-      run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/sample-web-app/api-app:latest
+      run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest

@@ -1,13 +1,11 @@
 variable "terraform_service_account" {
   type        = string
   description = "The service account to use for terraform operations on the GCP project"
-  default = "github-actions-service-account@toptal-project-381320.iam.gserviceaccount.com"
 }
 
 variable "gcp_project" {
   type        = string
   description = "The project id for GCP"
-  default = "toptal-project-381320"
 }
 
 variable "gcp_region" {
@@ -16,7 +14,6 @@ variable "gcp_region" {
   default     = "europe-west4"
 }
 
-/*
 variable "database_tier" {
   type        = string
   description = "The machine type to use for the CloudSQL instance"
@@ -44,11 +41,22 @@ variable "database_flags" {
     value = string
   }))
   default = []
-}*/
+}
 
 variable "environment" {
   type        = string
   description = "environment"
-  default = "prod"
+  default     = "prod"
 }
+
+variable "gcr_min_instances" {
+  type        = number
+  description = "The minimum amount of instances that should be kept running in Cloud Run."
+}
+
+variable "gcr_max_instances" {
+  type        = number
+  description = "The maximum amount of instances that can be kept running in Cloud Run."
+}
+
 
