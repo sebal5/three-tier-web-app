@@ -32,7 +32,7 @@ resource "google_cloud_run_service" "this" {
           }
         }
         env {
-          name  = "DBPASS"
+          name = "DBPASS"
           value_from {
             secret_key_ref {
               key  = "latest"
