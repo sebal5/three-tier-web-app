@@ -33,5 +33,5 @@ jobs:
        
     - name: Push to Google Artifact Registry
       if: |
-        !cancelled() && needs.config.result == 'success's
+        !cancelled() && needs.config.result == 'success'
       run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
