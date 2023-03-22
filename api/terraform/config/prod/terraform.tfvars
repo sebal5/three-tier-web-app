@@ -3,7 +3,6 @@ gcp_project               = "toptal-project-381320"
 environment               = "prod"
 gcr_min_instances         = 1
 gcr_max_instances         = 1
-dns_managed_zone          = "test"
 # SQL Database flags
 database_tier               = "db-custom-1-3840"
 database_availability_type  = "REGIONAL"
