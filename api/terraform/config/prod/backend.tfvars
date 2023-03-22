@@ -1,2 +1,2 @@
-bucket      = "terraform-app"
-credentials = "/Users/senthil.balasubramaniyan/Toptal/Threetier-web-app/three-tier-web-app/api/terraform/github-actions-service-account.json"
+bucket                      = "terraform-app"
+impersonate_service_account = "github-actions-service-account@toptal-project-381320.iam.gserviceaccount.com"
