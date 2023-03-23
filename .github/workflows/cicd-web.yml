@@ -19,6 +19,7 @@ jobs:
     - name: npm Lint
       run: |
         cd web
+        npm ci
         npm run lint
 
 
