@@ -1,18 +1,18 @@
 # Devops API App
 
-## install the node packages for the api tier:
+## Development
 
-```sh
-→ npm install
-```
+### Requirements
 
-## start the app
+- [NPM](https://www.npmjs.com/): version 14 or higher
+- [Terraform](https://www.terraform.io/downloads.html): Currently locked at version `1.4.2`
 
-```sh
-→ npm start
-```
+### App to run locally
 
-## NOTE this app uses two env variables:
+- `npm ci`
+- `npm start`
+
+### NOTE this app uses the below env variables:
 
 - PORT: the listening PORT
 - DB: Name of the database to connect
@@ -22,3 +22,10 @@
 - DBPORT: Database server listening port
 
 These variables need to be set
+
+### Linting / audit / Formatting
+
+- For NPM, use `npm run lint` & `npm audit --omit=dev`
+- For Terraform, use `terraform fmt -recursive terraform/`
+
+
