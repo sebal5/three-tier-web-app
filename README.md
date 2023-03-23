@@ -21,6 +21,8 @@ https://web-app-cloud-run-prod-zlblmbf5aq-ez.a.run.app/
 
 ## Architecture
 
+- [3tier-app](https://git.toptal.com/ravi.kiran/sbalasu/-/blob/main/assets/three_tier_web_app_v4.svg)
+
 
 
 
