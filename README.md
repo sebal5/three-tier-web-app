@@ -15,5 +15,11 @@ The folders `web` and `api` respectively describe how to install and run each ap
 
 git remote add origin https://git.toptal.com/ravi.kiran/sbalasu.git
 
+## Web application (Result)
+
+https://web-app-cloud-run-prod-zlblmbf5aq-ez.a.run.app/
+
+
+
 
 
