@@ -4,8 +4,30 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - web
 jobs:
-  config:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: "17.x"
+
+    - name: npm Lint
+      run: |
+        cd web
+        npm Lint
+
+
+    - name: npm Audit 
+      run: |
+        cd web
+        npm audit 
+
+  Build Image:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -23,9 +45,31 @@ jobs:
       run:  |
        cd web
        docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
-       
+
+  Publish Image:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
     - name: Push to Google Artifact Registry
       run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
+  
+  Terraform Deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
     - uses: hashicorp/setup-terraform@v1
       name: Install terraform
