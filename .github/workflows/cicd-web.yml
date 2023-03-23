@@ -19,13 +19,13 @@ jobs:
     - name: npm Lint
       run: |
         cd web
-        npm run lint
+        npm lint
 
 
     - name: npm Audit 
       run: |
         cd web
-        npm run audit 
+        npm audit 
 
   Build:
     runs-on: ubuntu-latest
