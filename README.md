@@ -10,14 +10,17 @@ web <=> api <=> db
 The folders `web` and `api` respectively describe how to install and run each app.
 
 
-- [web](https://github.com/sebal5/three-tier-web-app/blob/main/web/README.md)
-- [api](https://github.com/sebal5/three-tier-web-app/blob/main/api/README.md)
+- [web](https://git.toptal.com/ravi.kiran/sbalasu/-/blob/main/web/README.md)
+- [api](https://git.toptal.com/ravi.kiran/sbalasu/-/blob/main/api/README.md)
 
 git remote add origin https://git.toptal.com/ravi.kiran/sbalasu.git
 
 ## Web application (Result)
 
 https://web-app-cloud-run-prod-zlblmbf5aq-ez.a.run.app/
+
+## Architecture
+
 
 
 
