@@ -25,7 +25,7 @@ jobs:
        docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
        
     - name: Push to Google Artifact Registry
-      run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
+      run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
 
     - uses: hashicorp/setup-terraform@v1
       name: Install terraform
