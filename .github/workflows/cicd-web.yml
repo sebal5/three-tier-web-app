@@ -27,7 +27,7 @@ jobs:
         cd web
         npm audit 
 
-  Build Image:
+  Build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -46,7 +46,7 @@ jobs:
        cd web
        docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
 
-  Publish Image:
+  Publish:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -60,7 +60,7 @@ jobs:
     - name: Push to Google Artifact Registry
       run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
   
-  Terraform Deploy:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
