@@ -5,10 +5,32 @@ on:
     branches:
       - 'main'
     paths:
-      - api
+      - api/**
 jobs:
-  config:
+  npm:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: 16
+
+    - name: npm Lint
+      run: |
+        cd web
+        npm ci
+        npm run lint
+
+
+    - name: npm Audit 
+      run: |
+        cd web
+        npm audit --omit=dev
+
+  Build_Publish:
+    runs-on: ubuntu-latest
+    needs: [npm]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -21,23 +43,34 @@ jobs:
     - name: Configure docker for GCP
       run: gcloud auth configure-docker europe-west4-docker.pkg.dev --quiet
 
-    - name: Build docker image - api
+    - name: Build docker image - web
       run:  |
-       cd api
-       docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
-       
+       cd web
+       docker build . -t europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
+
     - name: Push to Google Artifact Registry
-      run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/api-app:latest
+      run:  docker push europe-west4-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/web-appplication/web-app:latest
+  
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: [Build_Publish]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
     - uses: hashicorp/setup-terraform@v1
       name: Install terraform
 
     - name: Terraform Init
-      run: cd api/terraform && terraform init -backend-config=config/prod/backend.tfvars
+      run: cd web/terraform && terraform init -backend-config=config/prod/backend.tfvars
 
     - name: Terraform Plan
-      run: cd api/terraform && terraform plan -var-file=config/prod/terraform.tfvars
+      run: cd web/terraform && terraform plan -var-file=config/prod/terraform.tfvars
 
     - name: Terraform Apply
-      run: cd api/terraform && terraform apply  -var-file=config/prod/terraform.tfvars -auto-approve
-
+      run: cd web/terraform && terraform apply  -var-file=config/prod/terraform.tfvars -auto-approve
