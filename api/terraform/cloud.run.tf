@@ -46,7 +46,7 @@ resource "google_cloud_run_service" "this" {
         }
         env {
           name  = "DBHOST"
-          value = google_sql_database_instance.this.private_ip_address
+          value = "api-db.services.toptal.com"
         }
         env {
           name  = "DBPORT"
