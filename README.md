@@ -19,7 +19,7 @@ git remote add origin https://git.toptal.com/ravi.kiran/sbalasu.git
 
 https://web-app-cloud-run-prod-zlblmbf5aq-ez.a.run.app/
 
-http://http://35.241.27.101/ - CLOUD CDN Enabled with External HTTP LB
+http://35.241.27.101/ - CLOUD CDN Enabled with External HTTP LB
 
 ## Architecture
 
